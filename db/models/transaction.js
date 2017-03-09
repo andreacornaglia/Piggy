@@ -12,7 +12,7 @@ const Transaction = db.define('transactions', {
     //when we retrieve it, we divide by 100
     //remember on the front-end to add the dollar sign and the 2 floating points
     get: function() {
-      this.getDataValue('price') / 100;
+      return this.getDataValue('amount') / 100;
     }
   },
   //we assume this is done automatically

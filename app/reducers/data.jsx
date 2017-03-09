@@ -15,7 +15,9 @@ export const getData = data => ({type: GET_DATA, data})
 export const fetchData = () =>
   dispatch =>
     axios.get('/api/transactions/')
-      .then(data => dispatch(getData(data.data)))
+      .then(data => {
+        console.log('in axios, our data is:', data[0])
+        dispatch(getData(data.data))})
       .catch(err => console.error('fetching data unsuccessful', err))
 
 export default reducer
