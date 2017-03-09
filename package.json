@@ -1,5 +1,5 @@
 {
-  "name": "__BONES_NEEDS_A_NAME__",
+  "name": "piggy",
   "version": "0.0.1",
   "description": "A happy little skeleton.",
   "main": "index.js",
@@ -19,6 +19,7 @@
     "test": "mocha --compilers js:babel-register app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
     "test-watch": "npm run test -- --watch",
     "seed": "node db/seed.js",
+    "build-css": "node-sass --watch public/scss/input.scss -o public",
     "deploy-heroku": "bin/deploy-heroku.sh"
   },
   "repository": {
@@ -30,7 +31,7 @@
     "redux",
     "skeleton"
   ],
-  "author": "Ashi Krishnan <me@ashi.works>",
+  "author": "Andrea Cornaglia",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/queerviolet/bones/issues"
@@ -49,6 +50,7 @@
     "enzyme": "^2.5.1",
     "express": "^4.14.0",
     "finalhandler": "^1.0.0",
+    "node-sass": "^4.5.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",
@@ -66,7 +68,8 @@
     "redux-thunk": "^2.1.0",
     "sequelize": "^3.24.6",
     "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "victory": "^0.18.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",

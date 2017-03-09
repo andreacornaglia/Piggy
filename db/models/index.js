@@ -6,7 +6,8 @@
 
 const User = require('./user')
 const OAuth = require('./oauth')
+const Transaction = require('./transaction')
 
 OAuth.belongsTo(User)
 User.hasOne(OAuth)
-module.exports = {User}
+module.exports = {User, Transaction}

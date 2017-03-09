@@ -9,6 +9,8 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 
+import BarChart from './components/BarChart'
+
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
 ) (
@@ -25,8 +27,8 @@ render (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/jokes" />
-        <Route path="/jokes" component={Jokes} />
+        <IndexRedirect to="/barchart" />
+        <Route path="/barchart" component={BarChart} />
       </Route>
     </Router>
   </Provider>,
