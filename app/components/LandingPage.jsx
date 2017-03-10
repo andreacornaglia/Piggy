@@ -5,11 +5,11 @@ import {Link} from 'react-router'
 export const LandingPage = () => (
   <div className="intro">
     <img className="piggy" src="/images/piggy.png"/>
-    <p>Hello Andrea! How Can I help you today?</p>
-    <ul>
-      <Link to={'/expenses'}><li className="intro-btn">Expenses</li></Link>
-      <li className="intro-btn">Budget</li>
-      <li className="intro-btn">Trends</li>
+    <p className="hello">Hello Andrea! How Can I help you today?</p>
+    <ul className="intro-ul">
+      <Link to={'/expenses'}><li className="intro-btn intro-btn-1">Expenses</li></Link>
+      <Link><li className="intro-btn intro-btn-2">Budget</li></Link>
+      <Link><li className="intro-btn intro-btn-3">Trends</li></Link>
     </ul>
   </div>
 )

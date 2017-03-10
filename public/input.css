@@ -20,6 +20,9 @@ h3 {
   font-family: 'Roboto' !important;
   font-size: 18px; }
 
+a {
+  display: block; }
+
 a:hover {
   text-decoration: none; }
 
@@ -70,17 +73,63 @@ a:hover {
   margin-top: 20px;
   width: 100%;
   padding: 0; }
-  .intro ul .intro-btn {
+  .intro ul li {
     width: 80%;
     background-color: #3CA957;
     color: white;
     padding: 20px;
     font-size: 15px;
     margin: 0 auto 10px auto;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    opacity: 0; }
 
 .intro-btn:hover {
   background-color: #88F6A3 !important; }
 
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: rgba(136, 246, 163, 0.5); }
+
+.intro-btn a:nth-child(1) {
+  border: 1px solid red; }
+
+.intro-btn-1 {
+  animation: move;
+  animation-delay: 0.5s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards; }
+
+.intro-btn-2 {
+  animation: move;
+  animation-delay: 1s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards; }
+
+.intro-btn-3 {
+  animation: move;
+  animation-delay: 1.5s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards; }
+
+.intro-btn-4 {
+  animation: move;
+  animation-delay: 2s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards; }
+
+.intro-btn-5 {
+  animation: move;
+  animation-delay: 2.5s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards; }
+
+@keyframes move {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+.hello {
+  animation: move;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  opacity: 0; }
