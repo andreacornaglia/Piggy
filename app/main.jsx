@@ -14,7 +14,7 @@ import {fetchTotalData} from './reducers/total'
 import {fetchCoffeeData} from './reducers/coffee'
 
 const onCoffeeEnter = nextRouterState => {
-  store.dispatch(fetchCoffeeData())
+  store.dispatch(fetchCoffeeData(nextRouterState.params.category))
 }
 
 const onTotalEnter = nextRouterState => {
@@ -28,7 +28,7 @@ render (
         <IndexRedirect to="/landing" />
         <Route path="/landing" component={LandingPage} />
         <Route path="/expenses" component={Expenses} />
-        <Route path="/barchart/" component={BarChart} onEnter={onCoffeeEnter} />
+        <Route path="/barchart/:category" component={BarChart} onEnter={onCoffeeEnter} />
         <Route path="/breakdown/" component={Breakdown} onEnter={onTotalEnter} />
       </Route>
     </Router>

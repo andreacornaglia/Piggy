@@ -8,10 +8,10 @@ export const Expenses = () => (
     <p>Cool, which expenses do you wanna look at?</p>
     <ul>
       <Link to={`/breakdown/`}><li className="intro-btn">All of them!</li></Link>
-      <Link to={`/barchart/`}><li className="intro-btn">Coffee</li></Link>
-      <li className="intro-btn">Lunch</li>
-      <li className="intro-btn">Dinner</li>
-      <li className="intro-btn">Groceries</li>
+      <Link to={`/barchart/Coffee`}><li className="intro-btn">Coffee</li></Link>
+      <Link to={`/barchart/Lunch`}><li className="intro-btn">Lunch</li></Link>
+      <Link to={`/barchart/Dinner`}><li className="intro-btn">Dinner</li></Link>
+      <Link to={`/barchart/Groceries`}><li className="intro-btn">Groceries</li></Link>
     </ul>
   </div>
 )

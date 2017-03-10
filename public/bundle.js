@@ -15671,9 +15671,9 @@ var getCoffee = exports.getCoffee = function getCoffee(coffee) {
   return { type: GET_COFFEE, coffee: coffee };
 };
 
-var fetchCoffeeData = exports.fetchCoffeeData = function fetchCoffeeData() {
+var fetchCoffeeData = exports.fetchCoffeeData = function fetchCoffeeData(category) {
   return function (dispatch) {
-    return _axios2.default.get('/api/transactions/coffee').then(function (data) {
+    return _axios2.default.get('/api/transactions/' + category).then(function (data) {
       console.log('in axios, we get:', data.data);
       dispatch(getCoffee(data.data));
     }).catch(function (err) {
@@ -26580,7 +26580,9 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
       _react2.default.createElement(
         'h3',
         null,
-        'This week coffee expenses:'
+        'This week ',
+        data && data[0].category,
+        ' expenses:'
       )
     ),
     _react2.default.createElement(
@@ -26868,7 +26870,7 @@ var Expenses = exports.Expenses = function Expenses() {
       ),
       _react2.default.createElement(
         _reactRouter.Link,
-        { to: '/barchart/' },
+        { to: '/barchart/Coffee' },
         _react2.default.createElement(
           'li',
           { className: 'intro-btn' },
@@ -26876,19 +26878,31 @@ var Expenses = exports.Expenses = function Expenses() {
         )
       ),
       _react2.default.createElement(
-        'li',
-        { className: 'intro-btn' },
-        'Lunch'
+        _reactRouter.Link,
+        { to: '/barchart/Lunch' },
+        _react2.default.createElement(
+          'li',
+          { className: 'intro-btn' },
+          'Lunch'
+        )
       ),
       _react2.default.createElement(
-        'li',
-        { className: 'intro-btn' },
-        'Dinner'
+        _reactRouter.Link,
+        { to: '/barchart/Dinner' },
+        _react2.default.createElement(
+          'li',
+          { className: 'intro-btn' },
+          'Dinner'
+        )
       ),
       _react2.default.createElement(
-        'li',
-        { className: 'intro-btn' },
-        'Groceries'
+        _reactRouter.Link,
+        { to: '/barchart/Groceries' },
+        _react2.default.createElement(
+          'li',
+          { className: 'intro-btn' },
+          'Groceries'
+        )
       )
     )
   );
@@ -63787,7 +63801,7 @@ var _coffee = __webpack_require__(212);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var onCoffeeEnter = function onCoffeeEnter(nextRouterState) {
-  _store2.default.dispatch((0, _coffee.fetchCoffeeData)());
+  _store2.default.dispatch((0, _coffee.fetchCoffeeData)(nextRouterState.params.category));
 };
 
 var onTotalEnter = function onTotalEnter(nextRouterState) {
@@ -63806,7 +63820,7 @@ var onTotalEnter = function onTotalEnter(nextRouterState) {
       _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/landing' }),
       _react2.default.createElement(_reactRouter.Route, { path: '/landing', component: _LandingPage2.default }),
       _react2.default.createElement(_reactRouter.Route, { path: '/expenses', component: _Expenses2.default }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/barchart/', component: _BarChart2.default, onEnter: onCoffeeEnter }),
+      _react2.default.createElement(_reactRouter.Route, { path: '/barchart/:category', component: _BarChart2.default, onEnter: onCoffeeEnter }),
       _react2.default.createElement(_reactRouter.Route, { path: '/breakdown/', component: _Breakdown2.default, onEnter: onTotalEnter })
     )
   )

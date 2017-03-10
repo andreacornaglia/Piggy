@@ -18,7 +18,7 @@ export const BarChart = ({data}) => {
     <div className="container">
       <div id="header">
         <img src="/images/piggy.png" className="piggy-sm"/>
-        <h3>This week coffee expenses:</h3>
+        <h3>This week {data && data[0].category} expenses:</h3>
       </div>
       <p className="sum">{dollarsum}</p>
       {data &&

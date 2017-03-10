@@ -12,9 +12,9 @@ const reducer = (state=null, action) => {
 const GET_COFFEE = 'GET_COFFEE'
 export const getCoffee = coffee => ({type: GET_COFFEE, coffee})
 
-export const fetchCoffeeData = () =>
+export const fetchCoffeeData = (category) =>
   dispatch =>
-    axios.get('/api/transactions/coffee')
+    axios.get(`/api/transactions/${category}`)
       .then(data => {
         console.log('in axios, we get:', data.data)
         dispatch(getCoffee(data.data))})
