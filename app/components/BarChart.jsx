@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { VictoryChart, VictoryBar, VictoryLabel} from 'victory'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 //import theme from './Theme'
 
 export const BarChart = ({data}) => {
@@ -17,7 +18,7 @@ export const BarChart = ({data}) => {
   return (
     <div className="container">
       <div id="header">
-        <img src="/images/piggy.png" className="piggy-sm"/>
+        <Link to="/landing"><img src="/images/piggy.png" className="piggy-sm"/></Link>
         <h3>This week {data && data[0].category} expenses:</h3>
       </div>
       <p className="sum">{dollarsum}</p>

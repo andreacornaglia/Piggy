@@ -26554,6 +26554,8 @@ var _victory = __webpack_require__(380);
 
 var _reactRedux = __webpack_require__(133);
 
+var _reactRouter = __webpack_require__(134);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //import theme from './Theme'
@@ -26576,7 +26578,11 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
     _react2.default.createElement(
       'div',
       { id: 'header' },
-      _react2.default.createElement('img', { src: '/images/piggy.png', className: 'piggy-sm' }),
+      _react2.default.createElement(
+        _reactRouter.Link,
+        { to: '/landing' },
+        _react2.default.createElement('img', { src: '/images/piggy.png', className: 'piggy-sm' })
+      ),
       _react2.default.createElement(
         'h3',
         null,
