@@ -26,7 +26,7 @@ const ExampleApp = connect(
 render (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={ExampleApp}>
+      <Route path="/">
         <IndexRedirect to="/barchart" />
         <Route path="/barchart" component={BarChart} />
       </Route>

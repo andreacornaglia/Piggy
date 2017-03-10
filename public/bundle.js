@@ -40945,40 +40945,46 @@ var _data = __webpack_require__(136);
 
 var _moment = __webpack_require__(0);
 
-var _moment2 = _interopRequireDefault(_moment);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var BarChart = exports.BarChart = function BarChart(_ref) {
   var data = _ref.data;
 
-  console.log('this is the data in the component', data);
+  //formating days to be nicer on the chart
+  var days = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SAT'];
   if (data) {
     data.forEach(function (element) {
-      return (0, _moment2.default)(element.date.split(" ")[0]).format('dddd');
+      return element.formatDate = days[new Date(element.date.split(" ")[0]).getDay()];
     });
   }
+  var sum = data ? Math.round(totalAm(data) * 100) / 100 : 0;
+  var dollarsum = '$' + sum;
   return _react2.default.createElement(
     'div',
-    { className: 'row' },
+    { className: 'container' },
     _react2.default.createElement(
-      'h1',
+      'h3',
       null,
-      'Here\'s our great chart!'
+      'This week coffee expenses:'
     ),
     _react2.default.createElement(
+      'p',
+      { className: 'sum' },
+      dollarsum
+    ),
+    data && _react2.default.createElement(
       _victory.VictoryChart,
       null,
       _react2.default.createElement(_victory.VictoryBar, { data: data
         // data accessor for x values
-        , x: 'date'
+        , x: 'formatDate'
         // data accessor for y values
         , y: 'amount' })
     ),
     _react2.default.createElement(
-      'h1',
+      'h3',
       null,
-      'Txns details'
+      'Details'
     ),
     _react2.default.createElement(
       'table',
@@ -41014,14 +41020,9 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
             'tr',
             null,
             _react2.default.createElement(
-              'th',
-              { scope: 'row' },
-              '1'
-            ),
-            _react2.default.createElement(
               'td',
               null,
-              el.date
+              el.date.split(" ")[0]
             ),
             _react2.default.createElement(
               'td',
@@ -41039,6 +41040,14 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
     )
   );
 };
+
+function totalAm(data) {
+  var sum = 0;
+  for (var i = 0; i < data.length; i++) {
+    sum += data[i].amount;
+  }
+  return sum;
+}
 
 function MapSetToProps(state) {
   return {
@@ -78547,7 +78556,7 @@ var ExampleApp = (0, _reactRedux.connect)(function (_ref) {
     { history: _reactRouter.browserHistory },
     _react2.default.createElement(
       _reactRouter.Route,
-      { path: '/', component: ExampleApp },
+      { path: '/' },
       _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/barchart' }),
       _react2.default.createElement(_reactRouter.Route, { path: '/barchart', component: _BarChart2.default })
     )

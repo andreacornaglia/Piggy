@@ -6,4 +6,23 @@ $pink: #3CA957;
 body{
   background-color: $background;
   font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+.table td{
+    padding: 15px !important;
+    vertical-align: top;
+    font-family: 'Roboto';
+    font-size: 15px;
+}
+
+h3{
+  font-family: 'Roboto' !important;
+}
+
+.sum{
+  float: right;
+  font-size: 30px;
+  font-weight: light;
+  font-family: 'Roboto Slab', sans-serif;
 }
