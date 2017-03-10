@@ -33,6 +33,12 @@ export const Breakdown = ({data}) => {
       {data &&
           <VictoryPie
             data={totals}
+            innerRadius={115}
+            animate={{
+                      onLoad: {
+                        duration: 2000
+                      }
+                    }}
             colorScale={[
                 "#57F67E",
                 "#78B888",

@@ -26742,6 +26742,12 @@ var Breakdown = exports.Breakdown = function Breakdown(_ref) {
     ),
     data && _react2.default.createElement(_victory.VictoryPie, {
       data: totals,
+      innerRadius: 115,
+      animate: {
+        onLoad: {
+          duration: 2000
+        }
+      },
       colorScale: ["#57F67E", "#78B888", "#A1F6B6", "#3CA957", "#2A763D"]
       // data accessor for x values
       , x: 'category'
