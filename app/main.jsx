@@ -5,31 +5,31 @@ import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
 import store from './store'
-import Login from './components/Login'
-import WhoAmI from './components/WhoAmI'
 
 import BarChart from './components/BarChart'
 import LandingPage from './components/LandingPage'
+import Expenses from './components/Expenses'
+import Breakdown from './components/Breakdown'
+import {fetchTotalData} from './reducers/total'
+import {fetchCoffeeData} from './reducers/coffee'
 
-const ExampleApp = connect(
-  ({ auth }) => ({ user: auth })
-) (
-  ({ user, children }) =>
-    <div>
-      <nav>
-        {user ? <WhoAmI/> : <Login/>}
-      </nav> 
-      {children}
-    </div>
-)
+const onCoffeeEnter = nextRouterState => {
+  store.dispatch(fetchCoffeeData())
+}
+
+const onTotalEnter = nextRouterState => {
+  store.dispatch(fetchTotalData())
+}
 
 render (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/">
-        <IndexRedirect to="/barchart" />
-        <Route path="/barchart" component={BarChart} />
+        <IndexRedirect to="/landing" />
         <Route path="/landing" component={LandingPage} />
+        <Route path="/expenses" component={Expenses} />
+        <Route path="/barchart/" component={BarChart} onEnter={onCoffeeEnter} />
+        <Route path="/breakdown/" component={Breakdown} onEnter={onTotalEnter} />
       </Route>
     </Router>
   </Provider>,

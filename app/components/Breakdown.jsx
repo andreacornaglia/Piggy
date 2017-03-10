@@ -1,16 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { VictoryChart, VictoryBar, VictoryLabel} from 'victory'
+import { VictoryChart, VictoryPie } from 'victory'
 import {connect} from 'react-redux'
-//import theme from './Theme'
 
-export const BarChart = ({data}) => {
-  //formating days to be nicer on the chart
-  var days = ['SU','MO','TU','WE','TH','FR','SAT'];
+export const Breakdown = ({data}) => {
+  const totals = [
+    {category:"Coffee", total:0},
+    {category:"Lunch", total:0},
+    {category:"Dinner", total:0},
+    {category:"Groceries", total:0},
+    {category:"Entertainment", total:0}
+  ]
   if(data){
-    data.forEach(element =>
-      element.formatDate = days[new Date(element.date.split(" ")[0]).getDay()]
-    )
+    for(var j = 0 ; j < totals.length; j++){
+      for(var i = 0; i < data.length; i++){
+        if(data[i].category === totals[j].category){
+          totals[j].total += data[i].amount
+        }
+      }
+    }
+    console.log(totals);
   }
   var sum = data ? Math.round(totalAm(data) * 100) / 100 : 0
   var dollarsum = '$' + sum
@@ -18,21 +27,23 @@ export const BarChart = ({data}) => {
     <div className="container">
       <div id="header">
         <img src="/images/piggy.png" className="piggy-sm"/>
-        <h3>This week coffee expenses:</h3>
+        <h3>This week total expenses:</h3>
       </div>
       <p className="sum">{dollarsum}</p>
       {data &&
-        <VictoryChart>
-          <VictoryBar
-            data={data}
-            style={{
-              data: {fill: '#3CA957'}
-            }}
+          <VictoryPie
+            data={totals}
+            colorScale={[
+                "#57F67E",
+                "#78B888",
+                "#A1F6B6",
+                "#3CA957",
+                "#2A763D"
+            ]}
             // data accessor for x values
-            x="formatDate"
+            x="category"
             // data accessor for y values
-            y="amount"/>
-        </VictoryChart>
+            y="total"/>
       }
       <table className="table table-striped">
         <thead>
@@ -40,6 +51,7 @@ export const BarChart = ({data}) => {
             <th>Date</th>
             <th>$</th>
             <th>Place</th>
+            <th>Category</th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +60,7 @@ export const BarChart = ({data}) => {
             <td>{el.date.split(" ")[0]}</td>
             <td>{el.amount}</td>
             <td>{el.place}</td>
+            <td>{el.category}</td>
           </tr>)
           )}
         </tbody>
@@ -67,8 +80,8 @@ function totalAm(data){
 
 function MapSetToProps (state) {
   return {
-    data: state.coffee
+    data: state.total
   }
 }
 
-export default connect(MapSetToProps)(BarChart)
+export default connect(MapSetToProps)(Breakdown)

@@ -6,7 +6,7 @@
 
 const User = require('./user')
 const OAuth = require('./oauth')
-const Transaction = require('./transaction')
+const Transaction = require('./transactions')
 
 OAuth.belongsTo(User)
 User.hasOne(OAuth)

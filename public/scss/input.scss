@@ -4,34 +4,83 @@ $pink: #F6888F;
 $green: #3CA957;
 $light-green: #88F6A3;
 
+.container{
+  padding: 0 !important;
+}
+
 body{
   background-color: $background;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
 }
 
-.table td{
+.table td, .table th{
     padding: 15px !important;
     vertical-align: top;
     font-family: 'Roboto';
     font-size: 15px;
 }
 
+.table th{
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
 h3{
   font-family: 'Roboto' !important;
+  font-size: 18px;
+}
+
+a:hover{
+  text-decoration: none;
 }
 
 .sum{
-  float: right;
   font-size: 30px;
-  font-weight: light;
   font-family: 'Roboto Slab', sans-serif;
+  width: 100%;
+  text-align: center;
+  margin: 20px 0 0 0;
 }
 
 .piggy{
   width: 300px;
   margin: 30px 50px;
 }
+
+#header{
+  display: inline-block;
+  width: 100%;
+  .piggy-sm{
+    width: 60px;
+    margin: 10px;
+    float: left;
+  }
+  h3{
+    float: left;
+    padding: 20px;
+    background: #eee;
+  }
+}
+
+/*
+#header{
+  display: inline-block;
+  width: 100%;
+  background: #eee;
+  .piggy-sm{
+    width: 60px;
+    margin: 10px;
+    float: left;
+  }
+  h3{
+    float: left;
+    padding-top: 13px;
+    margin-left: 20px;
+  }
+}
+*/
+
 
 .intro{
   p{
@@ -53,6 +102,13 @@ h3{
   }
 }
 
+.intro-btn:hover{
+  background-color: $light-green !important;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd){
+  background-color: rgba(136, 246, 163, .5);
+}
 
 
 
