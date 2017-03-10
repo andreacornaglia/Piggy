@@ -1,7 +1,8 @@
 //colors
 $background : #FCFCFC;
-$green: #F6888F;
-$pink: #3CA957;
+$pink: #F6888F;
+$green: #3CA957;
+$light-green: #88F6A3;
 
 body{
   background-color: $background;
@@ -26,3 +27,32 @@ h3{
   font-weight: light;
   font-family: 'Roboto Slab', sans-serif;
 }
+
+.piggy{
+  width: 300px;
+  margin: 30px 50px;
+}
+
+.intro{
+  p{
+    text-align: center;
+  }
+  ul{
+    margin-top: 20px;
+    width: 100%;
+    padding: 0;
+    .intro-btn{
+      width: 80%;
+      background-color: $green;
+      color: white;
+      padding: 20px;
+      font-size: 15px;
+      margin: 0 auto 10px auto;
+      text-transform: uppercase;
+    }
+  }
+}
+
+
+
+

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { VictoryChart, VictoryBar } from 'victory'
 import {connect} from 'react-redux'
 import {fetchData} from '../reducers/data'
-import {moment, format} from 'moment'
 
 export const BarChart = ({data}) => {
   //formating days to be nicer on the chart
