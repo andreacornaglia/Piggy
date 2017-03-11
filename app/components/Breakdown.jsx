@@ -31,46 +31,46 @@ export const Breakdown = ({data}) => {
       </div>
       <p className="sum">{dollarsum}</p>
       {data &&
-          <VictoryPie
-            data={totals}
-            innerRadius={115}
-            animate={{
-                      onLoad: {
-                        duration: 2000
-                      }
-                    }}
-            colorScale={[
-                "#57F67E",
-                "#78B888",
-                "#A1F6B6",
-                "#3CA957",
-                "#2A763D"
-            ]}
-            // data accessor for x values
-            x="category"
-            // data accessor for y values
-            y="total"/>
+          //line chart
+          <VictoryChart>
+             {
+              data.length > 1 ? <VictoryLine
+                 data={data}
+                 x="time"
+                 style={{
+                    data: {stroke: colors[color], strokeWidth:4},
+                 }}
+                 y={(datum) => datum.value}
+              /> : null
+             }
+             <VictoryAxis
+                // x
+                tickValues={xRange.length > 1 ? xRange : ["8:00 PM"]}
+                tickFormat={(tick) => {
+                   if (data.length < 1){
+                      return tick;
+                   }
+                   const time = data[tick-1].time.split(":");
+                   return formatTime(time);
+                }}
+                style={{
+                   axis: {stroke: colors.mediumGray},
+                   ticks: {stroke: colors.mediumGray},
+                   tickLabels: {fontSize: 12, padding: 30, stroke:"#EAEDEF"}
+                }}
+             />
+             <VictoryAxis
+                // y
+                dependentAxis
+                tickValues={yRange.length > 1 ? yRange : [0, 3, 6]}
+                style={{
+                   axis: {stroke: "none"},
+                   grid: {stroke:colors.mediumGray},
+                   tickLabels: {fontSize: 12, padding: 30,   stroke:colors.lightGray}
+                }}
+             />
+            </VictoryChart>
       }
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>$</th>
-            <th>Place</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data && data.map(el => (
-          <tr>
-            <td>{el.date.split(" ")[0]}</td>
-            <td>{el.amount}</td>
-            <td>{el.place}</td>
-            <td>{el.category}</td>
-          </tr>)
-          )}
-        </tbody>
-      </table>
     </div>
   )
 }

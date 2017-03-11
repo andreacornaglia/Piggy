@@ -3,39 +3,23 @@ import ReactDOM from 'react-dom'
 import { VictoryChart, VictoryBar, VictoryLabel} from 'victory'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
-import {fetchCoffeeData} from '../reducers/coffee'
+//import theme from './Theme'
 
-export const BarChart = ({data, changeCat}) => {
+export const Trends = ({data}) => {
   //formating days to be nicer on the chart
   var days = ['SU','MO','TU','WE','TH','FR','SAT'];
-  var categories = ['Coffee', 'Lunch', 'Dinner', 'Groceries'];
   if(data){
-    data.forEach(element => {
+    data.forEach(element =>
       element.formatDate = days[new Date(element.date.split(" ")[0]).getDay()]
-      }
     )
   }
   var sum = data ? Math.round(totalAm(data) * 100) / 100 : 0
   var dollarsum = '$' + sum
-  var onChangeCat = function(evt){
-      console.log('I am calling this')
-      evt.preventDefault()
-      const cat = evt.target.value
-      changeCat(cat)
-  }
   return (
     <div className="container">
       <div id="header">
         <Link to="/landing"><img src="/images/piggy.png" className="piggy-sm"/></Link>
-        <div className="cont">
-          <p>This week</p>
-          <select className="form-control custom-select" onChange={onChangeCat}>
-            <option>{data && data[0].category}</option>
-            {data && categories.map(element => element !== data[0].category ? <option>{element}</option> : null)}
-              
-          </select>
-          <p>expenses:</p>
-        </div>
+        <h3>This week {data && data[0].category} expenses:</h3>
       </div>
       <p className="sum">{dollarsum}</p>
       {data &&
@@ -88,10 +72,4 @@ function MapSetToProps (state) {
   }
 }
 
-const MapDispatchToProps = dispatch => ({
-  changeCat: (category) => {
-    dispatch(fetchCoffeeData(category))
-  }
-})
-
-export default connect(MapSetToProps, MapDispatchToProps)(BarChart)
+export default connect(MapSetToProps)(Trends)

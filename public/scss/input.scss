@@ -60,10 +60,21 @@ a:hover{
     margin: 10px;
     float: left;
   }
-  h3{
+  .cont{
     float: left;
-    padding: 20px;
-    background: #eee;
+    padding: 25px 0;
+    
+    display: inline-block;
+    font-size: 19px;
+    p{
+      float: left;
+    }
+    select{
+      float: left;
+      width: 100px;
+      background: #eee;
+      margin: 0 10px;
+    }
   }
 }
 
@@ -139,4 +150,13 @@ a:hover{
   animation-duration: 2s;
   animation-fill-mode: forwards; 
   opacity: 0;
+}
+
+.custom-select{
+  border: none;
+  border-bottom: 1px solid #ccc;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+  font-size: 18px;
 }

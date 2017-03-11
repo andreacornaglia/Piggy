@@ -26556,22 +26556,30 @@ var _reactRedux = __webpack_require__(134);
 
 var _reactRouter = __webpack_require__(91);
 
+var _coffee = __webpack_require__(212);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import theme from './Theme'
-
 var BarChart = exports.BarChart = function BarChart(_ref) {
-  var data = _ref.data;
+  var data = _ref.data,
+      changeCat = _ref.changeCat;
 
   //formating days to be nicer on the chart
   var days = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SAT'];
+  var categories = ['Coffee', 'Lunch', 'Dinner', 'Groceries'];
   if (data) {
     data.forEach(function (element) {
-      return element.formatDate = days[new Date(element.date.split(" ")[0]).getDay()];
+      element.formatDate = days[new Date(element.date.split(" ")[0]).getDay()];
     });
   }
   var sum = data ? Math.round(totalAm(data) * 100) / 100 : 0;
   var dollarsum = '$' + sum;
+  var onChangeCat = function onChangeCat(evt) {
+    console.log('I am calling this');
+    evt.preventDefault();
+    var cat = evt.target.value;
+    changeCat(cat);
+  };
   return _react2.default.createElement(
     'div',
     { className: 'container' },
@@ -26584,11 +26592,34 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
         _react2.default.createElement('img', { src: '/images/piggy.png', className: 'piggy-sm' })
       ),
       _react2.default.createElement(
-        'h3',
-        null,
-        'This week ',
-        data && data[0].category,
-        ' expenses:'
+        'div',
+        { className: 'cont' },
+        _react2.default.createElement(
+          'p',
+          null,
+          'This week'
+        ),
+        _react2.default.createElement(
+          'select',
+          { className: 'form-control custom-select', onChange: onChangeCat },
+          _react2.default.createElement(
+            'option',
+            null,
+            data && data[0].category
+          ),
+          data && categories.map(function (element) {
+            return element !== data[0].category ? _react2.default.createElement(
+              'option',
+              null,
+              element
+            ) : null;
+          })
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'expenses:'
+        )
       )
     ),
     _react2.default.createElement(
@@ -26678,7 +26709,15 @@ function MapSetToProps(state) {
   };
 }
 
-exports.default = (0, _reactRedux.connect)(MapSetToProps)(BarChart);
+var MapDispatchToProps = function MapDispatchToProps(dispatch) {
+  return {
+    changeCat: function changeCat(category) {
+      dispatch((0, _coffee.fetchCoffeeData)(category));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(MapSetToProps, MapDispatchToProps)(BarChart);
 
 /***/ }),
 /* 382 */
@@ -26740,80 +26779,47 @@ var Breakdown = exports.Breakdown = function Breakdown(_ref) {
       { className: 'sum' },
       dollarsum
     ),
-    data && _react2.default.createElement(_victory.VictoryPie, {
-      data: totals,
-      innerRadius: 115,
-      animate: {
-        onLoad: {
-          duration: 2000
-        }
-      },
-      colorScale: ["#57F67E", "#78B888", "#A1F6B6", "#3CA957", "#2A763D"]
-      // data accessor for x values
-      , x: 'category'
-      // data accessor for y values
-      , y: 'total' }),
+    data &&
+    //line chart
     _react2.default.createElement(
-      'table',
-      { className: 'table table-striped' },
-      _react2.default.createElement(
-        'thead',
-        null,
-        _react2.default.createElement(
-          'tr',
-          null,
-          _react2.default.createElement(
-            'th',
-            null,
-            'Date'
-          ),
-          _react2.default.createElement(
-            'th',
-            null,
-            '$'
-          ),
-          _react2.default.createElement(
-            'th',
-            null,
-            'Place'
-          ),
-          _react2.default.createElement(
-            'th',
-            null,
-            'Category'
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'tbody',
-        null,
-        data && data.map(function (el) {
-          return _react2.default.createElement(
-            'tr',
-            null,
-            _react2.default.createElement(
-              'td',
-              null,
-              el.date.split(" ")[0]
-            ),
-            _react2.default.createElement(
-              'td',
-              null,
-              el.amount
-            ),
-            _react2.default.createElement(
-              'td',
-              null,
-              el.place
-            ),
-            _react2.default.createElement(
-              'td',
-              null,
-              el.category
-            )
-          );
-        })
-      )
+      _victory.VictoryChart,
+      null,
+      data.length > 1 ? _react2.default.createElement(VictoryLine, {
+        data: data,
+        x: 'time',
+        style: {
+          data: { stroke: colors[color], strokeWidth: 4 }
+        },
+        y: function y(datum) {
+          return datum.value;
+        }
+      }) : null,
+      _react2.default.createElement(VictoryAxis
+      // x
+      , { tickValues: xRange.length > 1 ? xRange : ["8:00 PM"],
+        tickFormat: function tickFormat(tick) {
+          if (data.length < 1) {
+            return tick;
+          }
+          var time = data[tick - 1].time.split(":");
+          return formatTime(time);
+        },
+        style: {
+          axis: { stroke: colors.mediumGray },
+          ticks: { stroke: colors.mediumGray },
+          tickLabels: { fontSize: 12, padding: 30, stroke: "#EAEDEF" }
+        }
+      }),
+      _react2.default.createElement(VictoryAxis
+      // y
+      , { dependentAxis: true,
+        tickValues: yRange.length > 1 ? yRange : [0, 3, 6],
+        style: {
+          axis: { stroke: "none" },
+          grid: { stroke: colors.mediumGray },
+          tickLabels: { fontSize: 12, padding: 30, stroke: colors.lightGray }
+        }
+      })
     )
   );
 };

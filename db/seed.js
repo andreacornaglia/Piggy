@@ -1,7 +1,7 @@
 const db = require('APP/db')
 
 const seedTransactions = () => db.Promise.map([
-  {date:'2017-03-09 12:20 pm', place:'Open Market', amount:'670', category: 'Lunch' },
+  {date:'2017-03-13', place:'Open Market', amount:'670', category: 'Lunch' },
   {date:'2017-03-09 8:40 am', place:'MTA', amount:'2880', category: 'Transportation' },
   {date:'2017-03-09 4:20 pm', place:'Starbucks', amount:'390', category: 'Coffee' },
   {date:'2017-03-08 9:20 pm', place:'Beron beron', amount:'6530', category: 'Dinner' },
