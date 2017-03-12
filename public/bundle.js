@@ -26564,16 +26564,15 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
   var data = _ref.data,
       changeCat = _ref.changeCat;
 
-  //formating days to be nicer on the chart
-  var days = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SAT'];
+  //parsing dates for chart
+  var week = getWeekData(data);
+  console.log('this is the week', week);
+  //categories to use on dropdown
   var categories = ['Coffee', 'Lunch', 'Dinner', 'Groceries'];
-  if (data) {
-    data.forEach(function (element) {
-      element.formatDate = days[new Date(element.date.split(" ")[0]).getDay()];
-    });
-  }
+  //formatting for table
   var sum = data ? Math.round(totalAm(data) * 100) / 100 : 0;
   var dollarsum = '$' + sum;
+  //dropdown to change the category to be viewed
   var onChangeCat = function onChangeCat(evt) {
     console.log('I am calling this');
     evt.preventDefault();
@@ -26631,12 +26630,12 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
       _victory.VictoryChart,
       null,
       _react2.default.createElement(_victory.VictoryBar, {
-        data: data,
+        data: week,
         style: {
           data: { fill: '#3CA957' }
         }
         // data accessor for x values
-        , x: 'formatDate'
+        , x: 'label'
         // data accessor for y values
         , y: 'amount' })
     ),
@@ -26701,6 +26700,40 @@ function totalAm(data) {
     sum += data[i].amount;
   }
   return sum;
+}
+
+function getWeekData(data) {
+  //we use this data as today because the db is fixed
+  var today = new Date('2017-03-09T12:00:00-0500');
+  var daysOfWeek = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SAT'];
+  var todayIsDay = today.getDay();
+  //define week
+  var week = [];
+  var MILLIS_IN_A_DAY = 24 * 60 * 60 * 1000; // milliseconds in a day
+  for (var i = 0; i < 7; i++) {
+    var thisDay = new Date(today);
+    thisDay.setDate(thisDay.getDate() + (i - todayIsDay));
+    //week.push(thisDay.toISOString().substr(0, 10));
+    //let thisDay = new Date(today + (i - todayIsDay) * MILLIS_IN_A_DAY)
+    thisDay = thisDay.toISOString().substr(0, 10);
+    var obj = { date: thisDay, amount: 0, label: daysOfWeek[i] };
+    week.push(obj);
+  }
+  //define month
+
+  //go through data and:
+  //if no ocurrence on day, add object w/amount 0
+  //if more than 1 ocurrence per day, combine instances
+  if (data) {
+    for (var i = 0; i < week.length; i++) {
+      for (var j = 0; j < data.length; j++) {
+        if (week[i].date === data[j].date.substr(0, 10)) {
+          week[i].amount += data[j].amount;
+        }
+      }
+    }
+  }
+  return week;
 }
 
 function MapSetToProps(state) {
