@@ -26632,12 +26632,13 @@ var BarChart = exports.BarChart = function BarChart(_ref) {
       _react2.default.createElement(_victory.VictoryBar, {
         data: week,
         style: {
-          data: { fill: '#3CA957' }
+          data: { fill: '#3CA957', width: 30 }
         }
         // data accessor for x values
-        , x: 'label'
+        , x: 'dateF'
         // data accessor for y values
-        , y: 'amount' })
+        , y: 'amount' }),
+      _react2.default.createElement(_victory.VictoryAxis, null)
     ),
     _react2.default.createElement(
       'table',
@@ -26716,7 +26717,7 @@ function getWeekData(data) {
     //week.push(thisDay.toISOString().substr(0, 10));
     //let thisDay = new Date(today + (i - todayIsDay) * MILLIS_IN_A_DAY)
     thisDay = thisDay.toISOString().substr(0, 10);
-    var obj = { date: thisDay, amount: 0, label: daysOfWeek[i] };
+    var obj = { date: thisDay, amount: 0, dateF: daysOfWeek[i], label: '$0' };
     week.push(obj);
   }
   //define month
@@ -26729,6 +26730,7 @@ function getWeekData(data) {
       for (var j = 0; j < data.length; j++) {
         if (week[i].date === data[j].date.substr(0, 10)) {
           week[i].amount += data[j].amount;
+          week[i].label = '$' + week[i].amount;
         }
       }
     }

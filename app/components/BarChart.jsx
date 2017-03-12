@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { VictoryChart, VictoryBar, VictoryLabel} from 'victory'
+import { VictoryChart, VictoryBar, VictoryLabel, VictoryAxis} from 'victory'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {fetchCoffeeData} from '../reducers/coffee'
@@ -40,12 +40,13 @@ export const BarChart = ({data, changeCat}) => {
           <VictoryBar
             data={week}
             style={{
-              data: {fill: '#3CA957'}
+              data: {fill: '#3CA957',  width: 30 }
             }}
             // data accessor for x values
-            x="label"
+            x="dateF"
             // data accessor for y values
             y="amount"/>
+          <VictoryAxis/>
         </VictoryChart>
       }
       <table className="table table-striped">
@@ -92,7 +93,7 @@ function getWeekData(data){
       //week.push(thisDay.toISOString().substr(0, 10));
       //let thisDay = new Date(today + (i - todayIsDay) * MILLIS_IN_A_DAY)
       thisDay = thisDay.toISOString().substr(0, 10)
-      let obj = {date: thisDay, amount: 0, label: daysOfWeek[i]}
+      let obj = {date: thisDay, amount: 0, dateF: daysOfWeek[i], label: '$0'}
       week.push(obj)
   }
   //define month
@@ -105,6 +106,7 @@ function getWeekData(data){
       for(var j=0; j < data.length; j++){
         if(week[i].date === data[j].date.substr(0, 10)) {
           week[i].amount += data[j].amount
+          week[i].label = '$' + week[i].amount
         }
       }
     }
