@@ -26778,6 +26778,8 @@ var _victory = __webpack_require__(380);
 
 var _reactRedux = __webpack_require__(134);
 
+var _reactRouter = __webpack_require__(91);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Breakdown = exports.Breakdown = function Breakdown(_ref) {
@@ -26814,47 +26816,89 @@ var Breakdown = exports.Breakdown = function Breakdown(_ref) {
       { className: 'sum' },
       dollarsum
     ),
-    data &&
-    //line chart
-    _react2.default.createElement(
-      _victory.VictoryChart,
-      null,
-      data.length > 1 ? _react2.default.createElement(VictoryLine, {
-        data: data,
-        x: 'time',
-        style: {
-          data: { stroke: colors[color], strokeWidth: 4 }
-        },
-        y: function y(datum) {
-          return datum.value;
-        }
-      }) : null,
-      _react2.default.createElement(VictoryAxis
-      // x
-      , { tickValues: xRange.length > 1 ? xRange : ["8:00 PM"],
-        tickFormat: function tickFormat(tick) {
-          if (data.length < 1) {
-            return tick;
+    data && _react2.default.createElement(_victory.VictoryPie, {
+      data: totals,
+      innerRadius: 115,
+      events: [{
+        target: "data",
+        eventHandlers: {
+          onClick: function onClick() {
+            return [{
+              target: "labels",
+              mutation: function mutation(props) {
+                return _reactRouter.browserHistory.push('/barchart/' + props.text);
+              }
+            }];
           }
-          var time = data[tick - 1].time.split(":");
-          return formatTime(time);
-        },
-        style: {
-          axis: { stroke: colors.mediumGray },
-          ticks: { stroke: colors.mediumGray },
-          tickLabels: { fontSize: 12, padding: 30, stroke: "#EAEDEF" }
         }
-      }),
-      _react2.default.createElement(VictoryAxis
-      // y
-      , { dependentAxis: true,
-        tickValues: yRange.length > 1 ? yRange : [0, 3, 6],
-        style: {
-          axis: { stroke: "none" },
-          grid: { stroke: colors.mediumGray },
-          tickLabels: { fontSize: 12, padding: 30, stroke: colors.lightGray }
-        }
-      })
+      }],
+      animate: { onLoad: { duration: 2000 } },
+      colorScale: ["#57F67E", "#78B888", "#A1F6B6", "#3CA957", "#2A763D"]
+      // data accessor for x values
+      , x: 'category'
+      // data accessor for y values
+      , y: 'total' }),
+    _react2.default.createElement(
+      'table',
+      { className: 'table table-striped' },
+      _react2.default.createElement(
+        'thead',
+        null,
+        _react2.default.createElement(
+          'tr',
+          null,
+          _react2.default.createElement(
+            'th',
+            null,
+            'Date'
+          ),
+          _react2.default.createElement(
+            'th',
+            null,
+            '$'
+          ),
+          _react2.default.createElement(
+            'th',
+            null,
+            'Place'
+          ),
+          _react2.default.createElement(
+            'th',
+            null,
+            'Category'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'tbody',
+        null,
+        data && data.map(function (el) {
+          return _react2.default.createElement(
+            'tr',
+            null,
+            _react2.default.createElement(
+              'td',
+              null,
+              el.date.split(" ")[0]
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              el.amount
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              el.place
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              el.category
+            )
+          );
+        })
+      )
     )
   );
 };
