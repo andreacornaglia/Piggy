@@ -3,26 +3,35 @@ import ReactDOM from 'react-dom'
 import { VictoryChart, VictoryPie } from 'victory'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
+import getPeriodData from '../../utils/parseDates'
 
 export const Breakdown = ({data}) => {
+  /*
   const totals = [
     {category:"Coffee", total:0},
     {category:"Lunch", total:0},
     {category:"Dinner", total:0},
-    {category:"Groceries", total:0},
-    {category:"Entertainment", total:0}
+    {category:"Groceries", total:0}
   ]
+  let week
   if(data){
+    //bug: I'm only getting lunch transactions, not coffee, because are on the same day. need to look into getPeriodData!
+    week = getPeriodData(data, 'week', 'total')
+    console.log('week is:', week)
     for(var j = 0 ; j < totals.length; j++){
-      for(var i = 0; i < data.length; i++){
-        if(data[i].category === totals[j].category){
-          totals[j].total += data[i].amount
+      for(var i = 0; i < week.length; i++){
+        if(week[i].category === totals[j].category){
+          totals[j].total += week[i].amount
         }
       }
     }
     console.log(totals);
   }
-  var sum = data ? Math.round(totalAm(data) * 100) / 100 : 0
+  */
+  ///need to work on parseDates
+  week = getPeriodData(data, 'week', 'total')
+  
+  var sum = data ? Math.round(totalAm(week) * 100) / 100 : 0
   var dollarsum = '$' + sum
   return (
     <div className="container">
@@ -71,9 +80,9 @@ export const Breakdown = ({data}) => {
           </tr>
         </thead>
         <tbody>
-          {data && data.map(el => (
+          {data && week.map(el => (
           <tr>
-            <td>{el.date.split(" ")[0]}</td>
+            <td>{el.date}</td>
             <td>{el.amount}</td>
             <td>{el.place}</td>
             <td>{el.category}</td>

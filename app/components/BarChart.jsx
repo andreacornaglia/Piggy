@@ -4,15 +4,16 @@ import { VictoryChart, VictoryBar, VictoryLabel, VictoryAxis} from 'victory'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {fetchCoffeeData} from '../reducers/coffee'
+import getPeriodData from '../../utils/parseDates'
 
 export const BarChart = ({data, changeCat}) => {
   //parsing dates for chart
-  const week = getWeekData(data)
+  let week = data ? getPeriodData(data, 'week') : null
   console.log('this is the week', week)
   //categories to use on dropdown
   const categories = ['Coffee', 'Lunch', 'Dinner', 'Groceries'];
   //formatting for table
-  var sum = data ? Math.round(totalAm(data) * 100) / 100 : 0
+  var sum = week ? Math.round(totalAm(week) * 100) / 100 : 0
   var dollarsum = '$' + sum
   //dropdown to change the category to be viewed
   var onChangeCat = function(evt){
@@ -58,27 +59,31 @@ export const BarChart = ({data, changeCat}) => {
           </tr>
         </thead>
         <tbody>
-          {data && data.map(el => (
-          <tr>
-            <td>{el.date.split(" ")[0]}</td>
-            <td>{el.amount}</td>
-            <td>{el.place}</td>
-          </tr>)
-          )}
+          {data && week.map(el => {
+            if(el.amount !== 0){
+              return (
+              <tr>
+                <td>{el.date}</td>
+                <td>{el.amount}</td>
+                <td>{el.place}</td>
+              </tr>
+              )
+            }
+          })}
         </tbody>
       </table>
     </div>
   )
 }
 
-function totalAm(data){
+function totalAm(period){
   var sum = 0
-  for(var i = 0; i < data.length; i++){
-    sum += data[i].amount
+  for(var i = 0; i < period.length; i++){
+    sum += period[i].amount
   }
   return sum
 }
-
+/*
 function getWeekData(data){
   //we use this data as today because the db is fixed
   const today = new Date('2017-03-09T12:00:00-0500')
@@ -96,10 +101,6 @@ function getWeekData(data){
       let obj = {date: thisDay, amount: 0, dateF: daysOfWeek[i], label: '$0'}
       week.push(obj)
   }
-  //define month
-  
-  //go through data and:
-  //if no ocurrence on day, add object w/amount 0
   //if more than 1 ocurrence per day, combine instances
   if(data){
     for(var i = 0; i < week.length; i++){
@@ -107,14 +108,14 @@ function getWeekData(data){
         if(week[i].date === data[j].date.substr(0, 10)) {
           week[i].amount += data[j].amount
           week[i].label = '$' + week[i].amount
+          week[i].place = data[j].place
         }
       }
     }
   }
   return week;
 }
-
-
+*/
 function MapSetToProps (state) {
   return {
     data: state.coffee
